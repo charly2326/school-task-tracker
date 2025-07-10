@@ -1,7 +1,10 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "schooltask",
-  "webDir": "dist/public",
-  "bundledWebRuntime": false
+  "appName": "SchoolTaskTracker",
+  "webDir": "dist",
+  "server": {
+    "url": "http://192.168.X.X:5173", 
+    "cleartext": true
+  }
 }
 
