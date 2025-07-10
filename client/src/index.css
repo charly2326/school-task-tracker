@@ -63,6 +63,12 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    /* Prevent zoom on mobile */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
   }
 }
 
