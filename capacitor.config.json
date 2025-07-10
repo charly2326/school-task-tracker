@@ -1,0 +1,7 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "schooltask",
+  "webDir": "dist/public",
+  "bundledWebRuntime": false
+}
+
