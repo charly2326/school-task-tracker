@@ -1,7 +1,7 @@
 {
   "appId": "io.ionic.starter",
   "appName": "SchoolTaskTracker",
-  "webDir": "dist",
+  "webDir": "dist/public",
   "server": {
     "url": "http://10.0.0.51:8100",
     "cleartext": true
