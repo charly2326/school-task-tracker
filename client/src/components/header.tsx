@@ -10,19 +10,22 @@ export function Header({ onAddTask }: HeaderProps) {
     <header className="bg-white shadow-sm border-b-4 border-purple-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
+          {/* Logo + Título */}
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
               <GraduationCap className="text-white text-xl" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">MisCosas</h1>
+              <h1 className="text-2xl font-bold text-gray-900">MiSemana🐸</h1>
               <p className="text-sm text-gray-600">¡Organiza tu semana escolar!</p>
             </div>
           </div>
+
+          {/* Botones + Usuario */}
           <div className="flex items-center space-x-4">
             <Button
               onClick={onAddTask}
-              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-medium px-4 py-2 rounded-xl transition-all duration-200 flex items-center space-x-2 md:hidden"
+              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-3 py-2 rounded-md"
             >
               <Plus className="w-4 h-4" />
             </Button>
@@ -36,3 +39,4 @@ export function Header({ onAddTask }: HeaderProps) {
     </header>
   );
 }
+

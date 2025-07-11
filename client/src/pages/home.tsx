@@ -6,6 +6,9 @@ import { TaskList } from "@/components/task-list";
 import { SubjectSidebar } from "@/components/subject-sidebar";
 import { TaskModal } from "@/components/task-modal";
 import type { TaskWithSubject, Subject } from "@shared/schema";
+import Layout from "../components/Layout";
+
+
 
 export default function Home() {
   const [selectedDate, setSelectedDate] = useState(() => {
