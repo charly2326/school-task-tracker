@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="flex items-center space-x-3">
           <img src="/icon-192.svg" alt="icono" className="w-10 h-10" />
           <div>
-            <h1 className="text-lg font-bold text-violet-600">MiSemana🦄</h1>
+            <h1 className="text-lg font-bold text-violet-600">MiSemana🐦</h1>
             <p className="text-xs text-gray-500">¡Organiza tu semana escolar!</p>
           </div>
         </div>

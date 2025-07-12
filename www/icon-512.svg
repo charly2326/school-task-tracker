@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="80" fill="url(#gradient)"/>
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+  <!-- Large graduation cap -->
+  <path d="M256 150L150 192V278L256 320L362 278V192L256 150Z" fill="white" stroke="white" stroke-width="6"/>
+  <path d="M256 150L128 192L256 234L384 192L256 150Z" fill="white"/>
+  <circle cx="384" cy="234" r="20" fill="white"/>
+  <path d="M384 254V300" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <!-- School tasks dots -->
+  <circle cx="192" cy="384" r="12" fill="white"/>
+  <circle cx="256" cy="384" r="12" fill="white"/>
+  <circle cx="320" cy="384" r="12" fill="white"/>
+  <!-- Calendar lines -->
+  <rect x="160" y="320" width="192" height="4" rx="2" fill="white" opacity="0.6"/>
+  <rect x="160" y="336" width="128" height="4" rx="2" fill="white" opacity="0.6"/>
+  <rect x="160" y="352" width="160" height="4" rx="2" fill="white" opacity="0.6"/>
+</svg>
