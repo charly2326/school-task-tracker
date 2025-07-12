@@ -2,27 +2,61 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Miscosas - Organiza tu semana escolar</title>
-    <meta name="description" content="Una aplicación divertida y colorida para ayudarte a organizar tus tareas escolares y planificar tu semana fácilmente." />
-    <meta name="theme-color" content="#8b5cf6" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>MisCosas - Organiza tu semana escolar</title>
+    <meta
+      name="description"
+      content="Una aplicación divertida y colorida para ayudarte a organizar tus tareas escolares de forma fácil y eficiente."
+    />
+
+    <!-- Color de la barra superior (Android y navegadores compatibles) -->
+    <meta name="theme-color" content="#00000000" />
+
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/manifest.json" />
+
+    <!-- Iconos -->
+    <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/icon-192.svg" />
 
-    <!-- Apple Mobile App Config -->
+    <!-- Configuración iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MisCosas" />
+
+    <!-- Configuración Android -->
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Performance: conexión anticipada si usas fuentes externas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- SEO y vista previa en redes sociales -->
+    <meta property="og:title" content="MisCosas - Organiza tu semana escolar" />
+    <meta
+      property="og:description"
+      content="Una app divertida y colorida para organizar tus tareas escolares de manera eficiente."
+    />
+    <meta property="og:image" content="/cover.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
   </head>
-  <body>
+
+  <body style="background-color: transparent;">
+
     <div id="root"></div>
 
     <!-- Carga principal de la app -->
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Script opcional para desarrollo (puedes comentar si no lo usas) -->
+    <!-- Script opcional para desarrollo -->
     <!-- <script src="https://replit.com/public/js/replit-dev-banner.js"></script> -->
   </body>
 </html>
+
+
 

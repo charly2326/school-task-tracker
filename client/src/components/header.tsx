@@ -16,7 +16,7 @@ export function Header({ onAddTask }: HeaderProps) {
               <GraduationCap className="text-white text-xl" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">MiSemana🐸</h1>
+              <h1 className="text-2xl font-bold text-gray-900">MiSemanaaa🐸</h1>
               <p className="text-sm text-gray-600">¡Organiza tu semana escolar!</p>
             </div>
           </div>

@@ -8,8 +8,6 @@ import { TaskModal } from "@/components/task-modal";
 import type { TaskWithSubject, Subject } from "@shared/schema";
 import Layout from "../components/Layout";
 
-
-
 export default function Home() {
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
@@ -31,30 +29,30 @@ export default function Home() {
 
   if (subjectsLoading || tasksLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-        <div className="text-xl font-semibold text-gray-600">Cargando...</div>
-      </div>
+      <Layout>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+          <div className="text-xl font-semibold text-gray-600">Cargando...</div>
+        </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 font-sans">
-      <Header onAddTask={() => setIsTaskModalOpen(true)} />
-      
+    <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <WeeklyCalendar
           selectedDate={selectedDate}
           onDateSelect={setSelectedDate}
           allTasks={allTasks}
         />
-        
+
         <div className="grid lg:grid-cols-3 gap-8">
           <TaskList
             tasks={todayTasks}
             selectedDate={selectedDate}
             onAddTask={() => setIsTaskModalOpen(true)}
           />
-          
+
           <SubjectSidebar
             subjects={subjects}
             allTasks={allTasks}
@@ -68,6 +66,7 @@ export default function Home() {
         subjects={subjects}
         selectedDate={selectedDate}
       />
-    </div>
+    </Layout>
   );
 }
+

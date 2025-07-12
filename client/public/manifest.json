@@ -1,11 +1,11 @@
 {
   "name": "MisCosas - Organiza tu semana escolar",
   "short_name": "MisCosas",
-  "description": "Aplicación colorida y divertida para gestionar las tareas escolares organizadas por días y asignaturas",
+  "description": "Aplicación colorida y divertida para gestionar las tareas escolares organizadamente.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f0f4ff",
-  "theme_color": "#8b5cf6",
+  "background_color": "#1f1f1f",
+  "theme_color": "#00000000",
   "orientation": "portrait-primary",
   "icons": [
     {
@@ -25,3 +25,5 @@
   "lang": "es",
   "dir": "ltr"
 }
+
+

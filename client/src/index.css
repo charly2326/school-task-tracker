@@ -61,12 +61,22 @@
     @apply border-border;
   }
 
+  html {
+    background-color: #1f1f1f; /* Color oscuro para status bar */
+  }
+
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    min-height: 100vh;
+    background-color: #1f1f1f; /* Fondo sólido en PWA */
+    color: white;
+    padding-top: env(safe-area-inset-top); /* útil en iOS con notch */
+
     /* Prevent zoom on mobile */
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+
     /* Smooth scrolling */
     scroll-behavior: smooth;
   }
@@ -124,3 +134,4 @@
 .border-history { border-color: var(--history); }
 .border-art { border-color: var(--art); }
 .border-pe { border-color: var(--pe); }
+
