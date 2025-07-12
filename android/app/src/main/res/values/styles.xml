@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Base application theme ACTUALIZADA -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Personaliza tu tema aquí -->
@@ -8,10 +9,16 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!-- Colores del sistema -->
-        <item name="android:statusBarColor">#CCCCCC</item> <!-- Blanco más oscuro -->
-        <item name="android:navigationBarColor">#CCCCCC</item> <!-- Blanco más oscuro -->
-        <item name="android:windowLightStatusBar">true</item> <!-- Iconos oscuros arriba -->
-        <item name="android:windowLightNavigationBar">true</item> <!-- Iconos oscuros abajo -->
+        <item name="android:statusBarColor">#F2FFFFFF</item> <!-- Blanco con 95% opacidad -->
+        <item name="android:navigationBarColor">#F2FFFFFF</item> <!-- Blanco con 95% opacidad -->
+
+        <!-- Iconos oscuros -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Evitar transparencia no deseada -->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
     <!-- Otras variantes de tema (opcional, no activas actualmente) -->
@@ -25,5 +32,6 @@
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
         <item name="android:background">@drawable/splash</item>
     </style>
+
 </resources>
 
