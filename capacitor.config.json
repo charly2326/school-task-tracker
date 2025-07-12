@@ -2,15 +2,14 @@
   "appId": "io.ionic.starter",
   "appName": "SchoolTaskTracker",
   "webDir": "dist/public",
-  "server": {
-    "url": "http://10.0.0.51:8100",
-    "cleartext": true
-  },
   "plugins": {
     "StatusBar": {
-      "backgroundColor": "#1f1f1f", 
-      "style": "LIGHT" // Usa "DARK" si prefieres íconos oscuros sobre fondo claro
+      "backgroundColor": "#1f1f1f",
+      "style": "LIGHT"
     }
+  },
+  "server": {
+    "cleartext": true
   }
 }
 
