@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen">
       {/* 🟣 Encabezado fijo estilo móvil */}
-      <header className="flex items-center justify-between px-4 py-3 bg-white shadow-sm">
+      <header className="pt-6 px-4 pb-3 bg-white shadow-sm flex items-center justify-between">
         {/* Logo y texto izquierdo */}
         <div className="flex items-center space-x-3">
           <img src="/icon-192.svg" alt="icono" className="w-10 h-10" />
@@ -32,6 +32,4 @@ export default function Layout({ children }: { children: ReactNode }) {
     </div>
   );
 }
-
-
 

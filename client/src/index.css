@@ -135,3 +135,9 @@
 .border-art { border-color: var(--art); }
 .border-pe { border-color: var(--pe); }
 
+
+
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
