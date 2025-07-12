@@ -8,9 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!-- Colores del sistema -->
-        <item name="android:statusBarColor">#F2F2F2</item> <!-- Blanco más oscuro -->
-        <item name="android:navigationBarColor">#F2F2F2</item> <!-- Blanco más oscuro -->
-
+        <item name="android:statusBarColor">#CCCCCC</item> <!-- Blanco más oscuro -->
+        <item name="android:navigationBarColor">#CCCCCC</item> <!-- Blanco más oscuro -->
         <item name="android:windowLightStatusBar">true</item> <!-- Iconos oscuros arriba -->
         <item name="android:windowLightNavigationBar">true</item> <!-- Iconos oscuros abajo -->
     </style>
