@@ -1,7 +1,7 @@
 {
   "appId": "io.ionic.starter",
   "appName": "SchoolTaskTracker",
-  "webDir": "dist/public",
+  "webDir": "www",
   "plugins": {
     "StatusBar": {
       "backgroundColor": "#1f1f1f",
@@ -9,7 +9,7 @@
     }
   },
   "server": {
-    "url": "http://10.0.0.51:8100", // ← IP local del servidor que sirve la app
+    "url": "http://10.0.0.51:8100",
     "cleartext": true
   }
 }
