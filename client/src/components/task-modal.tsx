@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { X, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { getSubjectIcon } from "@/lib/subjects";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 import type { Subject, InsertTask } from "@shared/schema";
 
 interface TaskModalProps {
@@ -22,27 +24,58 @@ export function TaskModal({ isOpen, onClose, subjects, selectedDate }: TaskModal
   const [description, setDescription] = useState("");
   const [subjectId, setSubjectId] = useState<string>("");
   const [dueDate, setDueDate] = useState(selectedDate);
-  
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  useEffect(() => {
+    setDueDate(selectedDate);
+  }, [selectedDate]);
+
+  const handleClose = () => {
+    setTitle("");
+    setDescription("");
+    setSubjectId("");
+    setDueDate(selectedDate);
+    onClose();
+  };
+
   const createTaskMutation = useMutation({
     mutationFn: async (data: InsertTask) => {
-      return apiRequest("POST", "/api/tasks", data);
+      const numericSubjectId = Number(data.subjectId);
+      const subjectExists = subjects.some(s => s.id === numericSubjectId);
+
+      if (!subjectExists) {
+        throw new Error("La asignatura seleccionada no existe");
+      }
+
+      const taskData = {
+        title: data.title.trim(),
+        description: data.description?.trim() || null,
+        subjectId: numericSubjectId,
+        dueDate: Timestamp.fromDate(new Date(data.dueDate)),
+        completed: false,
+        createdAt: Timestamp.now(),
+        // Incluir datos básicos del subject para evitar nulls
+        subject: subjects.find(s => s.id === numericSubjectId) || {
+          id: numericSubjectId,
+          name: "Asignatura desconocida",
+          color: "#CCCCCC",
+          icon: "Book"
+        }
+      };
+
+      const docRef = await addDoc(collection(db, "tasks"), taskData);
+      return docRef.id;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/tasks/date"] });
-      toast({
-        title: "¡Tarea creada!",
-        description: "Nueva tarea agregada exitosamente 🎉",
-      });
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      toast({ title: "¡Tarea creada!", description: "Nueva tarea agregada 🎉" });
       handleClose();
     },
-    onError: () => {
+    onError: (error: Error) => {
       toast({
         title: "Error",
-        description: "No se pudo crear la tarea. Inténtalo de nuevo.",
+        description: error.message || "No se pudo crear la tarea",
         variant: "destructive",
       });
     },
@@ -54,7 +87,7 @@ export function TaskModal({ isOpen, onClose, subjects, selectedDate }: TaskModal
     if (!title.trim() || !subjectId || !dueDate) {
       toast({
         title: "Campos requeridos",
-        description: "Por favor completa todos los campos obligatorios.",
+        description: "Completa todos los campos",
         variant: "destructive",
       });
       return;
@@ -62,122 +95,85 @@ export function TaskModal({ isOpen, onClose, subjects, selectedDate }: TaskModal
 
     createTaskMutation.mutate({
       title: title.trim(),
-      description: description.trim() || undefined,
-      subjectId: parseInt(subjectId),
+      description: description.trim(),
+      subjectId: Number(subjectId),
       dueDate,
       completed: false,
     });
   };
 
-  const handleClose = () => {
-    setTitle("");
-    setDescription("");
-    setSubjectId("");
-    setDueDate(selectedDate);
-    onClose();
-  };
-
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md mx-auto rounded-2xl">
+      <DialogContent className="max-w-md rounded-2xl bg-white">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-gray-900 flex items-center justify-between">
+          <DialogTitle className="text-xl font-bold text-gray-900 flex justify-between">
             Nueva Tarea
-            <button
-              onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
-            >
+            <button onClick={handleClose} className="text-gray-400 hover:text-gray-600">
               <X className="w-5 h-5" />
             </button>
           </DialogTitle>
         </DialogHeader>
-        
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Título de la tarea *
-            </label>
-            <Input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Ej: Hacer ejercicios de matemáticas"
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              required
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Asignatura *
-            </label>
-            <Select value={subjectId} onValueChange={setSubjectId} required>
-              <SelectTrigger className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                <SelectValue placeholder="Seleccionar asignatura" />
-              </SelectTrigger>
-              <SelectContent>
-                {subjects.map((subject) => (
-                  <SelectItem key={subject.id} value={subject.id.toString()}>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Título de la tarea"
+            className="text-black"
+            required
+          />
+
+          <Select
+            value={subjectId}
+            onValueChange={setSubjectId}
+          >
+            <SelectTrigger className="text-black">
+              <SelectValue placeholder="Seleccionar asignatura" />
+            </SelectTrigger>
+            <SelectContent>
+              {subjects.map((subject) => {
+                const Icon = getSubjectIcon(subject.icon);
+                return (
+                  <SelectItem
+                    key={subject.id}
+                    value={subject.id.toString()}
+                    data-numeric-id={subject.id}
+                  >
                     <div className="flex items-center space-x-2">
-                      <div
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: subject.color }}
-                      />
+                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: subject.color }} />
+                      <Icon className="w-4 h-4 text-gray-500" />
                       <span>{subject.name}</span>
                     </div>
                   </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Descripción (opcional)
-            </label>
-            <Textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Detalles adicionales..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-              rows={3}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Fecha de entrega *
-            </label>
-            <Input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              required
-            />
-          </div>
-          
-          <div className="flex space-x-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
-            >
+                );
+              })}
+            </SelectContent>
+          </Select>
+
+          <Textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Descripción (opcional)"
+            className="text-black"
+          />
+
+          <Input
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            className="text-black"
+            required
+          />
+
+          <div className="flex gap-2 pt-2">
+            <Button type="button" variant="outline" onClick={handleClose} className="flex-1">
               Cancelar
             </Button>
             <Button
               type="submit"
               disabled={createTaskMutation.isPending}
-              className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2"
+              className="flex-1 bg-blue-600 text-white hover:bg-blue-700"
             >
-              {createTaskMutation.isPending ? (
-                <>Creando...</>
-              ) : (
-                <>
-                  <Plus className="w-4 h-4" />
-                  <span>Crear Tarea</span>
-                </>
-              )}
+              {createTaskMutation.isPending ? "Creando..." : "Crear Tarea"}
             </Button>
           </div>
         </form>
@@ -185,3 +181,5 @@ export function TaskModal({ isOpen, onClose, subjects, selectedDate }: TaskModal
     </Dialog>
   );
 }
+
+

@@ -23,7 +23,6 @@
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
-
   /* Subject Colors */
   --math: hsl(0, 84%, 60%);
   --science: hsl(217, 91%, 60%);
@@ -31,6 +30,9 @@
   --history: hsl(142, 76%, 36%);
   --art: hsl(32, 95%, 44%);
   --pe: hsl(328, 86%, 70%);
+  /* Weekend Colors */
+  --saturday: hsl(218, 70%, 45%);
+  --sunday: hsl(0, 70%, 45%);
 }
 
 .dark {
@@ -54,35 +56,30 @@
   --destructive-foreground: hsl(0, 0%, 98%);
   --ring: hsl(240, 4.9%, 83.9%);
   --radius: 0.5rem;
+  /* Weekend Colors Dark Mode */
+  --saturday: hsl(218, 70%, 65%);
+  --sunday: hsl(0, 70%, 65%);
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
-
   html {
-    background-color: #1f1f1f; /* Color oscuro para status bar */
+    @apply bg-background;
   }
-
   body {
     @apply font-sans antialiased bg-background text-foreground;
     min-height: 100vh;
-    background-color: #1f1f1f; /* Fondo sólido en PWA */
-    color: white;
-    padding-top: env(safe-area-inset-top); /* útil en iOS con notch */
-
-    /* Prevent zoom on mobile */
+    padding-top: env(safe-area-inset-top);
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-
-    /* Smooth scrolling */
     scroll-behavior: smooth;
   }
 }
 
-/* Custom animations for kid-friendly interactions */
+/* Animaciones personalizadas */
 @keyframes completeTask {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
@@ -113,31 +110,42 @@
   animation: slideUp 0.3s ease-out;
 }
 
-/* Custom utilities for subject colors */
-.bg-math { background-color: var(--math); }
-.bg-science { background-color: var(--science); }
-.bg-language { background-color: var(--language); }
-.bg-history { background-color: var(--history); }
-.bg-art { background-color: var(--art); }
-.bg-pe { background-color: var(--pe); }
+/* Utilidades por materia */
+.bg-math      { background-color: var(--math); }
+.bg-science   { background-color: var(--science); }
+.bg-language  { background-color: var(--language); }
+.bg-history   { background-color: var(--history); }
+.bg-art       { background-color: var(--art); }
+.bg-pe        { background-color: var(--pe); }
 
-.text-math { color: var(--math); }
-.text-science { color: var(--science); }
-.text-language { color: var(--language); }
-.text-history { color: var(--history); }
-.text-art { color: var(--art); }
-.text-pe { color: var(--pe); }
+.text-math      { color: var(--math); }
+.text-science   { color: var(--science); }
+.text-language  { color: var(--language); }
+.text-history   { color: var(--history); }
+.text-art       { color: var(--art); }
+.text-pe        { color: var(--pe); }
 
-.border-math { border-color: var(--math); }
-.border-science { border-color: var(--science); }
-.border-language { border-color: var(--language); }
-.border-history { border-color: var(--history); }
-.border-art { border-color: var(--art); }
-.border-pe { border-color: var(--pe); }
+.border-math      { border-color: var(--math); }
+.border-science   { border-color: var(--science); }
+.border-language  { border-color: var(--language); }
+.border-history   { border-color: var(--history); }
+.border-art       { border-color: var(--art); }
+.border-pe        { border-color: var(--pe); }
 
+/* Estilos para fin de semana */
+.bg-saturday { background-color: var(--saturday); }
+.bg-sunday { background-color: var(--sunday); }
+.text-saturday { color: var(--saturday); }
+.text-sunday { color: var(--sunday); }
+.border-saturday { border-color: var(--saturday); }
+.border-sunday { border-color: var(--sunday); }
 
-
-.safe-top {
-  padding-top: env(safe-area-inset-top);
+/* Hover states para días del calendario */
+.day:not(.day-selected, .day-disabled, .day-outside).text-saturday:hover {
+  background-color: hsl(var(--saturday) / 0.1);
 }
+.day:not(.day-selected, .day-disabled, .day-outside).text-sunday:hover {
+  background-color: hsl(var(--sunday) / 0.1);
+}
+
 
