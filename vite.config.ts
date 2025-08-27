@@ -4,7 +4,8 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 export default defineConfig(async () => {
-  const isReplit = process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined;
+  const isReplit =
+    process.env.NODE_ENV !== "production" && process.env.REPL_ID;
   const cartographerPlugin = isReplit
     ? [await import("@replit/vite-plugin-cartographer").then((m) => m.cartographer())]
     : [];
@@ -20,7 +21,7 @@ export default defineConfig(async () => {
     },
     root: path.resolve(__dirname, "client"),
     build: {
-      outDir: path.resolve(__dirname, "www"), // 👈 Cambiado para ser compatible con Capacitor/Appflow
+      outDir: path.resolve(__dirname, "www"), // 👈 compatible con Ionic
       emptyOutDir: true,
     },
     server: {
@@ -31,4 +32,3 @@ export default defineConfig(async () => {
     },
   };
 });
-

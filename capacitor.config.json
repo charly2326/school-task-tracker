@@ -9,7 +9,7 @@
     }
   },
   "server": {
-    "url": "http://10.0.0.51:8100",
+    "url": "http://10.0.0.53:8100",
     "cleartext": true
   }
 }
